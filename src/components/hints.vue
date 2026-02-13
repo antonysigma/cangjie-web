@@ -30,15 +30,14 @@
 </style>
 
 <script setup lang="ts">
-import Trie from "trie-prefix-tree";
 import {computed} from "vue";
 
+import {decodeKeyStroke} from "../decode";
 import {query} from "../models";
-import {keysdata, utf8data} from "../utf8data";
+import {trie} from "../trie";
+import {utf8data} from "../utf8data";
 
 import KeyStroke from "./key-stroke.vue";
-
-const trie = Trie([...Object.keys(utf8data) ].map((key) => key.slice(1)));
 
 const hint = computed<string[]>(() => {
   const new_query = query.value;
@@ -49,8 +48,4 @@ const hint = computed<string[]>(() => {
       .slice(0, new_query.search(/^(zx|x)/) !== -1 ? -1 : 20)
       .map((h) => h.slice(new_query.length));
 });
-
-function decodeKeyStroke(key: string): string {
-  return String.fromCodePoint(keysdata[key]);
-}
 </script>

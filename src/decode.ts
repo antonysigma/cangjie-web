@@ -1,7 +1,7 @@
 import {watch} from 'vue';
 
 import {candidates, is_valid, query, texts} from './models';
-import {utf8data} from "./utf8data";
+import {keysdata, utf8data} from "./utf8data";
 
 function selectCandidate(choice: number) {
   if (choice <= candidates.value.length) {
@@ -11,6 +11,13 @@ function selectCandidate(choice: number) {
   } else {
     is_valid.value = false;
   }
+}
+
+function decodeKeyStroke(key: string): string {
+  if (key.length !== 1) {
+    return '?';
+  }
+  return String.fromCodePoint(keysdata[key]);
 }
 
 watch(query, (new_query) => {
@@ -49,3 +56,5 @@ watch(query, (new_query) => {
   candidates.value =
       utf8data[key].map(unicode => String.fromCodePoint(unicode));
 });
+
+export {decodeKeyStroke};
