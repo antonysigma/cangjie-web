@@ -1,8 +1,8 @@
 <template>
   <h4>Text area:</h4>
   <div class="textpad">
-    <span>{{ texts }}</span
-    ><KeyStroke /><Candidates />
+    <pre>{{ texts }}<KeyStroke />_</pre>
+    <Candidates />
   </div>
 </template>
 
