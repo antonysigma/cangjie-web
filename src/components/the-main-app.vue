@@ -1,5 +1,6 @@
 <template>
   <TheTextarea />
+  <Hints />
   <hr />
   <TheConsole />
 </template>
@@ -12,6 +13,7 @@ body {
 </style>
 
 <script setup lang="ts">
+import Hints from "./hints.vue";
 import TheConsole from "./the-console.vue";
 import TheTextarea from "./the-textarea.vue";
 </script>

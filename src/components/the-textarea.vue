@@ -9,7 +9,7 @@
 <style>
 .textpad {
   width: 100%;
-  height: max(70vh, 5em);
+  height: max(40vh, 5em);
   line-height: 1.5em;
 }
 </style>
