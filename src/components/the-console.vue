@@ -1,7 +1,7 @@
 <template>
   <label
     >Console:
-    <input maxlength="6" v-model="query" id="console" v-on:keydown="onKeyPress"
+    <input maxlength="7" v-model="query" id="console" v-on:keydown="onKeyPress"
   /></label>
 </template>
 
