@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <td></td>
-          <td v-for="rk of remaining_keystrokes" :key="rk" :id="`thead-${rk}`">
+          <td v-for="rk of remaining_keystrokes" :key="rk">
             {{
               rk
                 .split("")
@@ -15,12 +15,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="fk of first_keystroke" :key="fk">
-          <td><KeyStroke />{{ decodeKeyStroke(fk) }}</td>
-          <td v-for="rk of remaining_keystrokes" :key="rk">
+        <tr
+          v-for="fk of first_keystroke"
+          :key="fk"
+          :class="{ 'highlight-row': suffix[0] === fk }"
+        >
+          <td>
+            <span class="key-stroke">{{
+              prefix
+                .split("")
+                .map((c) => decodeKeyStroke(c))
+                .join("")
+            }}</span
+            >{{ decodeKeyStroke(fk) }}
+          </td>
+          <td
+            v-for="rk of remaining_keystrokes"
+            :key="rk"
+            :class="{
+              'highlight-row': suffix.length > 1 && suffix.slice(1) === rk,
+            }"
+          >
             {{
-              `_${query}${fk}${rk}` in utf8data
-                ? String.fromCodePoint(utf8data[`_${query}${fk}${rk}`])
+              `_${prefix}${fk}${rk}` in utf8data
+                ? String.fromCodePoint(utf8data[`_${prefix}${fk}${rk}`])
                 : " "
             }}
           </td>
@@ -37,6 +55,9 @@ table.matrix thead {
 table.matrix tbody td:nth-child(1) {
   background-color: #eee;
 }
+.highlight-row {
+  background-color: #f005;
+}
 </style>
 <script setup lang="ts">
 import {computed} from "vue";
@@ -46,20 +67,24 @@ import {query} from "../models";
 import {trie} from "../trie";
 import {utf8data} from "../utf8data";
 
-import KeyStroke from "./key-stroke.vue";
+const prefix = computed<string>(() => {
+  const m = query.value.match(/^z?x/i);
+  return m ? m[0] : "";
+});
+
+const suffix =
+    computed<string>(() => { return query.value.replace(/^z?x/i, ""); });
 
 const hint = computed<string[]>(() => {
-  const new_query = query.value;
-  if (new_query.length === 0) {
+  if (prefix.value.length === 0) {
     return [];
   }
-  return trie.getPrefix(query.value, true)
-      .slice(0, new_query.search(/^(zx|x)/) !== -1 ? -1 : 20)
-      .map((h) => h.slice(new_query.length));
+  return trie.getPrefix(prefix.value, true)
+      .map((h) => h.slice(prefix.value.length));
 });
 
 const first_keystroke = computed<string[]>(() => {
-  const fk = hint.value.map((h) => h.slice(0, 1));
+  const fk = hint.value.map((h) => h[0]);
   return [...new Set(fk) ].sort();
 });
 

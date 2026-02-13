@@ -1,13 +1,24 @@
 <template>
   <span
-    :style="{
-      'background-color': is_valid ? 'white' : 'red',
-      color: is_valid ? 'gray' : 'white',
+    :class="{
+      'key-stroke': is_valid,
+      'invalid-key-stroke': !is_valid,
     }"
     >{{ keystroke }}</span
   >
 </template>
 
+<style>
+.key-stroke {
+  background-color: white;
+  color: gray;
+}
+
+.invalid-key-stroke {
+  background-color: red;
+  color: white;
+}
+</style>
 <script setup lang="ts">
 import {computed} from "vue";
 

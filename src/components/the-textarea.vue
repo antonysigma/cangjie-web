@@ -1,5 +1,4 @@
 <template>
-  <h4>Text area:</h4>
   <div class="textpad">
     <pre>{{ texts }}<KeyStroke />_</pre>
     <Candidates />
@@ -9,7 +8,7 @@
 <style>
 .textpad {
   width: 100%;
-  height: max(40vh, 5em);
+  height: max(30vh, 5em);
   line-height: 1.5em;
 }
 </style>

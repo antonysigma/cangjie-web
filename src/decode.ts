@@ -14,7 +14,7 @@ function selectCandidate(choice: number) {
 }
 
 function decodeKeyStroke(key: string): string {
-  if (key.length !== 1) {
+  if (!key || key.length !== 1) {
     return '?';
   }
   return String.fromCodePoint(keysdata[key]);
