@@ -1,14 +1,19 @@
 <template>
   <label
     >Console:
-    <input maxlength="7" v-model="query" id="console" v-on:keydown="onKeyPress"
+    <input
+      maxlength="7"
+      v-model="query_input"
+      id="console"
+      @keydown="onKeyPress"
+      @keyup.esc.prevent="onEscape"
   /></label>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from "vue";
 
-import {query, texts} from "../models";
+import {candidates, query, query_input, texts} from "../models";
 import {punctuations} from "../punctuations";
 
 onMounted(() => { document.getElementById("console")?.focus(); });
@@ -24,11 +29,6 @@ function onKeyPress(event: KeyboardEvent) {
     // line break
     texts.value += "\n";
     return;
-  case "Escape":
-    // clear console
-    query.value = "";
-    event.preventDefault();
-    return;
 
   case "Backspace":
     // delete words
@@ -42,5 +42,10 @@ function onKeyPress(event: KeyboardEvent) {
       return;
     }
   }
+}
+
+function onEscape(event: KeyboardEvent) {
+  query_input.value = "";
+  candidates.value = [];
 }
 </script>

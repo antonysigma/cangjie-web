@@ -1,13 +1,15 @@
 import {watch} from 'vue';
 
-import {candidates, is_valid, query, texts} from './models';
+import {candidates, is_valid, query, query_input, texts} from './models';
 import {keysdata, utf8data} from "./utf8data";
+
+function resetQuery() { query_input.value = ''; }
 
 function selectCandidate(choice: number) {
   if (choice <= candidates.value.length) {
     texts.value += candidates.value[choice - 1];
     candidates.value = []
-    query.value = '';
+    resetQuery();
   } else {
     is_valid.value = false;
   }
@@ -49,7 +51,7 @@ watch(query, (new_query) => {
   const new_candidates = utf8data[key];
   if (new_candidates.length == 1) {
     texts.value += String.fromCodePoint(utf8data[key]);
-    query.value = '';
+    resetQuery();
     return;
   }
 
