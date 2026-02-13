@@ -50,9 +50,6 @@ const hint = computed<string[]>(() => {
       .map((h) => h.slice(new_query.length));
 });
 
-const first_character =
-    computed<string[]>(() => { return hint.value.map((h) => h.slice(0, 1)); });
-
 function decodeKeyStroke(key: string): string {
   return String.fromCodePoint(keysdata[key]);
 }

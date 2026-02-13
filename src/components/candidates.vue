@@ -1,6 +1,6 @@
 <template>
-  <ol v-for="c of candidates">
-    <li :key="c">{{ c }}</li>
+  <ol>
+    <li :key="c" v-for="c of candidates">{{ c }}</li>
   </ol>
 </template>
 
@@ -10,9 +10,6 @@ ol {
   padding-left: 0.5em;
   margin: 0;
   list-style-type: decimal;
-}
-ol li {
-  margin: 0 10px;
 }
 </style>
 
