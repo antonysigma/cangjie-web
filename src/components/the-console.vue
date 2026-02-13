@@ -9,6 +9,7 @@
 import {onMounted} from "vue";
 
 import {query, texts} from "../models";
+import {punctuations} from "../punctuations";
 
 onMounted(() => { document.getElementById("console")?.focus(); });
 
@@ -18,16 +19,28 @@ function onKeyPress(event: KeyboardEvent) {
   }
 
   const key_name = event.key;
-  if (key_name === "Enter") {
+  switch (event.key) {
+  case "Enter":
     // line break
     texts.value += "\n";
     return;
-  }
+  case "Escape":
+    // clear console
+    query.value = "";
+    event.preventDefault();
+    return;
 
-  if (key_name === "Backspace") {
+  case "Backspace":
     // delete words
     texts.value = texts.value.slice(0, Math.max(0, texts.value.length - 1));
     return;
+
+  default:
+    if (key_name in punctuations) {
+      texts.value += punctuations[key_name];
+      event.preventDefault();
+      return;
+    }
   }
 }
 </script>

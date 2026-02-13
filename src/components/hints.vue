@@ -1,27 +1,30 @@
 <template>
-  <table>
-    <tr v-for="h of hint">
-      <td>
-        <KeyStroke />{{
-          h
-            .split("")
-            .map((item) => {
-              return decodeKeyStroke(item);
-            })
-            .join("")
-        }}
-      </td>
-      <td v-for="unicode of utf8data[`_${query}${h}`]">
-        {{ String.fromCodePoint(unicode) }}
-      </td>
-    </tr>
-  </table>
+  <div class="key-stroke-hints">
+    <table>
+      <tr v-for="h of hint">
+        <td>
+          <KeyStroke />{{
+            h
+              .split("")
+              .map((item) => {
+                return decodeKeyStroke(item);
+              })
+              .join("")
+          }}
+        </td>
+        <td v-for="unicode of utf8data[`_${query}${h}`]">
+          {{ String.fromCodePoint(unicode) }}
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <style>
-table {
+.key-stroke-hints {
+  display: block;
   font-family: monospace;
-  height: 10em;
+  height: max(20em, 30vh);
   overflow-y: scroll;
 }
 </style>
@@ -43,7 +46,7 @@ const hint = computed<string[]>(() => {
     return [];
   }
   return trie.getPrefix(query.value, true)
-      .slice(0, 5)
+      .slice(0, new_query.search(/^(zx|x)/) !== -1 ? -1 : 20)
       .map((h) => h.slice(new_query.length));
 });
 
