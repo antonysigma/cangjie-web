@@ -14,7 +14,6 @@
 import {onMounted} from "vue";
 
 import {candidates, query, query_input, texts} from "../models";
-import {punctuations} from "../punctuations";
 
 onMounted(() => { document.getElementById("console")?.focus(); });
 
@@ -34,13 +33,6 @@ function onKeyPress(event: KeyboardEvent) {
     // delete words
     texts.value = texts.value.slice(0, Math.max(0, texts.value.length - 1));
     return;
-
-  default:
-    if (key_name in punctuations) {
-      texts.value += punctuations[key_name];
-      event.preventDefault();
-      return;
-    }
   }
 }
 

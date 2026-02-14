@@ -1,6 +1,7 @@
 import {watch} from 'vue';
 
 import {candidates, is_valid, query, query_input, texts} from './models';
+import {punctuations} from './punctuations';
 import {keysdata, utf8data} from "./utf8data";
 
 function resetQuery() { query_input.value = ''; }
@@ -23,7 +24,14 @@ function decodeKeyStroke(key: string): string {
 }
 
 watch(query, (new_query) => {
-  if (new_query.length == 0) {
+  if (new_query.length === 0) {
+    return;
+  }
+
+  // Keyboard shortcuts for punctuations
+  if (new_query.length === 1 && new_query in punctuations) {
+    resetQuery();
+    texts.value += punctuations[new_query];
     return;
   }
 
