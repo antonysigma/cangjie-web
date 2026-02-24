@@ -1,6 +1,6 @@
 import {computed, ref} from 'vue';
 
-const query_input = ref<string>('');
+const query_input = ref<string>('hqat');
 const query = computed(() => { return query_input.value.toLowerCase(); });
 
 const candidates = ref<string[]>([]);
