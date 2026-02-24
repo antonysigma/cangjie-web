@@ -2,7 +2,7 @@
 
 A browser-based Cangjie Generation 3 Chinese Input Method Editor (IME) built with Vue 3.
 
-https://github.com/antonysigma/cangjie-web
+Demo: https://antonysigma.github.io/_static/cangjie-bin/
 
 <img src="./figures/preview.png"/>
 
